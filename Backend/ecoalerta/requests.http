@@ -1,0 +1,171 @@
+### EcoAlerta API – Manual Test Requests
+### Use with the VS Code "REST Client" extension (humao.rest-client)
+### or copy individual blocks to httpie / curl.
+###
+### Instructions:
+###   1. Start the server:  uvicorn app.main:app --reload
+###   2. Run "Register user" first, then "Login" and copy the token
+###   3. Paste the token in the @token variable below
+
+@baseUrl = http://localhost:8000/api/v1
+@adminEmail = admin@ecoalerta.com
+@adminPassword = Admin2024!
+@userEmail = carlos@example.com
+@userPassword = carlos123
+
+# ── After login, paste the returned access_token here ────────────────────────
+@token = PASTE_YOUR_TOKEN_HERE
+@adminToken = PASTE_ADMIN_TOKEN_HERE
+
+
+### ── HEALTH ──────────────────────────────────────────────────────────────────
+
+# @name health
+GET http://localhost:8000/health
+
+
+### ── AUTH ────────────────────────────────────────────────────────────────────
+
+# @name registerUser
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "name": "Carlos Méndez",
+  "email": "{{userEmail}}",
+  "password": "carlos123"
+}
+
+###
+
+# @name registerAdmin
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "name": "Admin EcoAlerta",
+  "email": "{{adminEmail}}",
+  "password": "{{adminPassword}}"
+}
+
+###
+
+# @name loginUser
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "{{userEmail}}",
+  "password": "{{userPassword}}"
+}
+
+###
+
+# @name loginAdmin
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "{{adminEmail}}",
+  "password": "{{adminPassword}}"
+}
+
+
+### ── REPORTS ──────────────────────────────────────────────────────────────────
+
+# @name createReport
+POST {{baseUrl}}/reports
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "title": "Basura acumulada en Parque García Rovira",
+  "description": "Hay bolsas de basura sin recoger desde hace 4 días. El olor es muy fuerte.",
+  "latitude": 7.1254,
+  "longitude": -73.1198,
+  "image_url": "https://picsum.photos/seed/eco1/800/600"
+}
+
+###
+
+# @name createReport2
+POST {{baseUrl}}/reports
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "title": "Escombros bloqueando andén en Cabecera",
+  "description": "Una obra dejó escombros en el andén impidiendo el paso de peatones.",
+  "latitude": 7.1198,
+  "longitude": -73.1089,
+  "image_url": "https://picsum.photos/seed/eco2/800/600"
+}
+
+###
+
+# @name listReports
+GET {{baseUrl}}/reports?page=1&page_size=10
+Authorization: Bearer {{token}}
+
+###
+
+# @name listReportsPending
+GET {{baseUrl}}/reports?status=pending&page=1
+Authorization: Bearer {{token}}
+
+###
+
+# @name listReportsInProgress
+GET {{baseUrl}}/reports?status=in_progress
+Authorization: Bearer {{token}}
+
+###
+
+# @name listReportsResolved
+GET {{baseUrl}}/reports?status=resolved
+Authorization: Bearer {{token}}
+
+###
+
+# @name getReport
+GET {{baseUrl}}/reports/1
+Authorization: Bearer {{token}}
+
+###
+
+# @name updateStatusInProgress  (admin only)
+PUT {{baseUrl}}/reports/1/status
+Content-Type: application/json
+Authorization: Bearer {{adminToken}}
+
+{
+  "status": "in_progress"
+}
+
+###
+
+# @name updateStatusResolved  (admin only)
+PUT {{baseUrl}}/reports/1/status
+Content-Type: application/json
+Authorization: Bearer {{adminToken}}
+
+{
+  "status": "resolved"
+}
+
+###
+
+# @name updateStatusForbidden  (regular user – should return 403)
+PUT {{baseUrl}}/reports/1/status
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "status": "resolved"
+}
+
+###
+
+# @name getReportNotFound  (should return 404)
+GET {{baseUrl}}/reports/99999
+Authorization: Bearer {{token}}
