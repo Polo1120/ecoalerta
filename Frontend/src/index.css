@@ -1,27 +1,38 @@
 @import "tailwindcss";
+@import "./assets/fonts-icon/icomoon.css";
+
 
 :root {
   --primary: #2E7D32;
+  --secondary: #66BB6A;
   --bg-color-body: #ecf3f9;
   --text-color: #f0f6fc;
   --bg-input: #F9F9F9;
   --border-input: #D1D5DB;
   --text-color-placeholder: #9CA3AF;
+  --text-color-black: #333333;
 }
 
-input:focus-visible {
-  outline: none;
+@theme {
+  --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
-body {
-  background-color: var(--bg-color-body);
-  color: var(--text-color);
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  margin: 0;
-  display: flex;
-  min-height: 100vh;
-  width: 100vw;
+@layer base {
+  h1 {
+    @apply text-4xl font-bold;
+  }
+
+  body {
+    @apply text-base bg-(--bg-color-body);
+  }
+
+  input {
+    @apply outline-none;
+  }
 }
+
+
+
 
 #root {
   flex: 1;
@@ -31,4 +42,8 @@ body {
 
 .btn-primary {
   @apply bg-(--primary) border border-(--primary) text-white h-[48px] flex items-center justify-center rounded-[8px];
+}
+
+.input-primary {
+  @apply bg-(--bg-input) border border-(--border-input) rounded-[8px] placeholder-(--text-color-placeholder) px-3.5 py-3.5 text-(--text-color-black);
 }
