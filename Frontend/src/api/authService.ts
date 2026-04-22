@@ -14,6 +14,12 @@ export interface RegisterCredentials {
 export interface LoginResponse {
   access_token: string;
   token_type: string;
+  user: {
+    id: string;
+    email: string;
+    name: string;
+    role: string;
+  };
 }
 
 export const authService = {

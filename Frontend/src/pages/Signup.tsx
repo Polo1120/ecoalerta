@@ -85,7 +85,7 @@ export default function Signup() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               className="w-full input-primary mb-4"
-              placeholder="Ej. Juan Pérez"
+              placeholder="Ingresa tu nombre completo"
               required
             />
 
@@ -99,7 +99,7 @@ export default function Signup() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-full input-primary mb-4"
-              placeholder="nombre@ejemplo.com"
+              placeholder="Ingresa tu correo electrónico"
               required
             />
 

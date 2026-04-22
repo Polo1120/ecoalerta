@@ -4,8 +4,8 @@ import { persist } from 'zustand/middleware';
 interface AuthState {
   isAuthenticated: boolean;
   token: string | null;
-  user: null | { id: string; email: string; name: string };
-  login: (token: string, user: { id: string; email: string; name: string }) => void;
+  user: null | { id: string; email: string; name: string; role: string };
+  login: (token: string, user: { id: string; email: string; name: string; role: string }) => void;
   logout: () => void;
 }
 

@@ -11,9 +11,10 @@ export function useAuth() {
     mutationFn: (credentials: LoginCredentials) => authService.login(credentials),
     onSuccess: (data, variables) => {
       loginAction(data.access_token, {
-        id: 'user_' + Date.now(),
-        email: variables.email,
-        name: variables.email.split('@')[0]
+        id: data.user.id,
+        email: data.user.email,
+        name: data.user.name,
+        role: data.user.role || 'user'
       });
       navigate('/');
     },

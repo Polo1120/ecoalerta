@@ -14,12 +14,13 @@ L.Icon.Default.mergeOptions({
 interface MapProps {
   center?: [number, number];
   zoom?: number;
+  heightClass?: string;
 }
 
-export default function EcoMap({ center = [4.6097, -74.0817], zoom = 13 }: MapProps) {
+export default function EcoMap({ center = [4.6097, -74.0817], zoom = 13, heightClass = 'min-h-[400px]' }: MapProps) {
   return (
-    <div className="w-full h-full rounded-2xl overflow-hidden border border-zinc-700/50 shadow-xl relative z-0">
-      <MapContainer center={center} zoom={zoom} scrollWheelZoom={false} className="w-full h-full min-h-[400px]">
+    <div className="w-full h-full rounded-2xl overflow-hidden border border-zinc-200 shadow-sm relative z-0">
+      <MapContainer center={center} zoom={zoom} scrollWheelZoom={false} className={`w-full h-full ${heightClass}`}>
         {/* Using Mapbox tiles (Replace access token later) or default to OpenStreetMap */}
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

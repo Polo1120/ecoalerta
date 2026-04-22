@@ -41,9 +41,13 @@
 }
 
 .btn-primary {
-  @apply bg-(--primary) border border-(--primary) text-white h-[48px] flex items-center justify-center rounded-[8px];
+  @apply bg-(--primary) border border-(--primary) text-white h-[48px] flex items-center justify-center rounded-[8px] cursor-pointer;
 }
 
 .input-primary {
   @apply bg-(--bg-input) border border-(--border-input) rounded-[8px] placeholder-(--text-color-placeholder) px-3.5 py-3.5 text-(--text-color-black);
+}
+
+.layout-container {
+  @apply w-full lg:max-w-7xl lg:mx-auto;
 }
